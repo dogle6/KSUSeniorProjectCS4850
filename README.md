@@ -1,5 +1,2 @@
 # SeniorProject
-TO DO
-  -Determine project 
-  -Develop schedule
-  -Turn in selection
+*Please direct yourself to the projects tab to see what needs to be done...
