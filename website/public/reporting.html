@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+ 
+    </head>
+    <body style="margin: 0px;">
+
+        <div class="container-fluid">
+            <img class="background" src="images/background_styling.png">
+            
+            <div class="header">
+                <img class="logo"src="images/ksu_logo.png">
+                <p class="title">Reporting</p>
+            </div>
+
+            <div class="form-container">
+
+                <!-- Form for report -->
+                <form action="http://localhost:3001/query" method="post">
+
+                    <!-- Search Dropbox -->
+                    <label for="search" class="search-title" >Search</label>
+                    <select id="search" class="search-dropdown" onchange="detectColumnChoice()">
+                        <option id="Projects">Projects</option>
+                        <option id="Students">Students</option>
+                        <option id="Members">Members</option>
+                        <option id="Professors">Professors</option>
+                        <option id="Updates">Updates</option>
+                        <option id="Sponsors">Sponsors</option>
+                    </select>
+                    
+                    <!-- Filter Dropbox -->
+                    <label for="filter" class="filter-title">Filter</label>
+                    <select id="filter"class="filter-dropdown">
+                        <option id=""></option>
+                        <option id="Equals">Equals</option>
+                        <option id="Contains">Contains</option>
+                        <option id="Not">Not</option>
+                    </select>
+                    
+                    <!-- Column Dropbox -->
+                    <label for="column" class="column-title" >Column</label>
+                    <select id="column" class="column-dropdown">
+                        <option id="All">All</option>
+                        <option id="NetID">NetID</option>
+                        <option id="Name">Name</option>
+                        <option id="Grade">Grade</option>
+                        <option id="Major">Major</option>
+                        <option id="Email">Email</option>
+
+                    </select>
+
+                    <!-- Value field -->
+                    <label for="value" class="value-title">Value</label>
+                    <input id="value" class="value-field">
+
+                    <!-- Sort Dropbox -->
+                    <label for="sort" class="sort-title">Sort</label>
+                    <select id="sort"class="sort-dropdown">
+                        <option id="Ascending">Ascending</option>
+                        <option id="Descending">Descending</option>
+                        <option id="ID">ID</option>
+                    </select>
+
+                    <!-- Form submit button -->
+                    <button type="submit" id="submit" class="reporting-button">Submit</button>
+                </form>
+
+            </div>
+        </div>
+
+
+
+        <script>
+
+            // Activated by changes in Search selection, calls rewriteChoice()
+            function detectColumnChoice(){
+                var selection = document.getElementById("search");
+                var choice = selection.value;
+                choice = choice.toString();
+                switch(choice){
+                    case 'Students':
+                        var text = ['ID', 'NetID', 'Name', 'Grade', 'Major', 'Email'];
+                        var value =  ['ID', 'NetID', 'Name', 'Grade', 'Major', 'Email'];
+                        rewriteChoice(text, value);
+                        break;
+
+                    case 'Updates':
+                        var text = ['ID', 'ProjectID', 'StudentID', 'ProfessorID', 'Update', 'Date'];
+                        var value = ['ID', 'ProjectID', 'StudentID', 'ProfessorID', 'Update', 'Date'];
+                        rewriteChoice(text, value);
+                        break;
+
+                    case 'Projects':
+                        var text = ['ID', 'Title', 'NDA', 'Type', 'Sponsored', 'Department', 'PointOfContact', 'Status', 'StartDate'];
+                        var value = ['ID', 'Title', 'NDA', 'Type', 'Sponsored', 'Department', 'PointOfContact', 'Status', 'StartDate'];
+                        rewriteChoice(text, value);
+                        break;
+
+                    case 'Members':
+                        var text = ['ID', 'ProjectID', 'UserType', 'ProfessorNetID', 'StudentNetID' ];
+                        var value =  ['ID', 'ProjectID', 'UserType', 'ProfessorNetID', 'StudentNetID' ];
+                        rewriteChoice(text, value);
+                        break;
+
+                    case 'Professors':
+                        var text = ['ID', 'NetID', 'Name', 'Department', 'Title', 'Email', 'Office', 'Phone'];
+                        var value = ['ID', 'NetID', 'Name', 'Department', 'Title', 'Email', 'Office', 'Phone'];
+                        rewriteChoice(text, value);
+                        break;
+
+                    case 'Sponsors':
+                        var text = ['ID', 'ProjectID', 'CompanyName', 'CompanyPOC'];
+                        var value = ['ID', 'ProjectID', 'CompanyName', 'CompanyPOC'];
+                        rewriteChoice(text, value);
+                        break;
+                }
+            }
+
+            // Rewrites the choices of the column field based on the selected choice for the Search field 
+            function rewriteChoice(text, value){
+
+                // Get number of options of current selection
+                var selection = document.getElementById("column");
+                var length = selection.length;
+                console.log( "Values: " + text + "\nSelection length: "  + length );
+                // Remove all options in current selection
+                for( var i = length; i > 0; i--){
+                    selection.removeChild( selection[i-1]);
+
+                }
+                // Add options for new selection
+                for( var i = 0; i < text.length; i++){
+                    var option = document.createElement('option');
+                    option.value = value[i];
+                    option.text = text[i];
+                    selection.appendChild(option);
+                }
+
+            }
+        </script>
+
+
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+    </body>
+</html>
